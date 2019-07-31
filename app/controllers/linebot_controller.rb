@@ -37,12 +37,13 @@ class LinebotController < ApplicationController
                 # "events"=>[{"type"=>"things", "replyToken"=>"0b58faa37dfa4edb9d91d617f663d211", "source"=>{"userId"=>"Ubc6ad91e177933c80cf44e01ded185b4", "type"=>"user"}, "timestamp"=>1564503511196, "things"=>{"deviceId"=>"t016c43acae4b8cacd32f9bed925cd122", "result"=>{"scenarioId"=>"01DH1T2G0VC180YMSMGC7Q6AAD", "revision"=>0, "startTime"=>1564503506501, "endTime"=>1564503510066, "resultCode"=>"success", "bleNotificationPayload"=>"AA==", "actionResults"=>[]}, "type"=>"scenarioResult"}}], 
                 # "destination"=>"Uf3f6113fde30ef0b622fa32d8388fdc7", 
                 # "linebot"=>{"events"=>[{"type"=>"things", "replyToken"=>"0b58faa37dfa4edb9d91d617f663d211", "source"=>{"userId"=>"Ubc6ad91e177933c80cf44e01ded185b4", "type"=>"user"}, "timestamp"=>1564503511196, "things"=>{"deviceId"=>"t016c43acae4b8cacd32f9bed925cd122", "result"=>{"scenarioId"=>"01DH1T2G0VC180YMSMGC7Q6AAD", "revision"=>0, "startTime"=>1564503506501, "endTime"=>1564503510066, "resultCode"=>"success", "bleNotificationPayload"=>"AA==", "actionResults"=>[]}, "type"=>"scenarioResult"}}], "destination"=>"Uf3f6113fde30ef0b622fa32d8388fdc7"}}
-            when Line::Bot:Event::Things
+            when Line::Bot::Event::Things
+                logger.debug('===================================== things')
                 message = {
                     type: 'text',
                     text: 'line://nv/camera/'
                 }
-                client.reply_message(event['replyToken'], message)
+                client.push_message(event['source']['userId'], message)
             end
         end
         head :ok
